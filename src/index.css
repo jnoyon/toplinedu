@@ -1,1 +1,26 @@
 @import "tailwindcss";
+@plugin "daisyui";
+
+@font-face {
+  font-family: 'LiAdorNoirrit';
+  src: url('./assets/fonts/LiAdorNoirritRegular.ttf') format('truetype');
+  font-weight: normal;
+  font-style: normal;
+}
+
+body {
+  font-family: 'LiAdorNoirrit', sans-serif;
+}
+
+.primary-text {
+ color: #2c3e50
+}
+.secondary-text {
+ color: #e74c3c
+}
+.primary-bg {
+ color: #2c3e50
+}
+.secondary-bg {
+ color: #e74c3c
+}
