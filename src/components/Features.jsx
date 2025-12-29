@@ -1,23 +1,32 @@
 import React from "react";
 import { motion } from "framer-motion";
+import { CheckCircle } from "lucide-react";
 
 function FeatureCard({ title, description, delay }) {
   return (
     <motion.div
-      initial={{ opacity: 0, y: 30 }}
+      initial={{ opacity: 0, y: 40 }}
       whileInView={{ opacity: 1, y: 0 }}
       transition={{ duration: 0.6, delay }}
       viewport={{ once: true }}
-      whileHover={{ scale: 1.03 }}
-      className="group relative bg-white/80 backdrop-blur-md border border-gray-100 rounded-3xl p-6 shadow-md hover:shadow-2xl transition-all overflow-hidden"
+      whileHover={{ scale: 1.04 }}
+      className="group relative bg-white/90 backdrop-blur-xl border border-gray-200 rounded-3xl p-7 shadow-xl hover:shadow-2xl transition-all overflow-hidden"
     >
-      {/* Animated accent bar */}
-      <div className="absolute left-0 top-0 w-1 h-full bg-gradient-to-b from-[#e74c3c] to-[#2c3e50] rounded-l-3xl opacity-0 group-hover:opacity-100 transition-all duration-300"></div>
+      <div className="absolute left-0 top-0 w-2 h-full bg-gradient-to-b from-[#e84118] to-[#192a56] rounded-l-3xl opacity-0 group-hover:opacity-100 transition-all duration-300"></div>
 
-      <h3 className="font-bold text-xl text-[#2c3e50] group-hover:text-[#e74c3c] mb-3 transition-colors">
-        {title}
-      </h3>
-      <p className="text-gray-700 leading-relaxed text-base">{description}</p>
+      <div className="flex items-start gap-3">
+        <CheckCircle className="text-[#e84118] mt-1 group-hover:scale-110 transition-transform duration-300" />
+        <div>
+          <h3 className="font-bold text-xl text-[#192a56] group-hover:text-[#e84118] transition-colors mb-1">
+            {title}
+          </h3>
+          {description && (
+            <p className="text-gray-700 leading-relaxed text-base">
+              {description}
+            </p>
+          )}
+        </div>
+      </div>
     </motion.div>
   );
 }
@@ -25,68 +34,78 @@ function FeatureCard({ title, description, delay }) {
 export default function Features() {
   const features = [
     {
-      title: "শুদ্ধভাবে ক‌োরআন শিক্ষা",
+      title: "ইংরেজি ও গণিতে শক্ত ভিত্তি গড়ে তোলা",
       description:
-        "প্রতিটি মুসলিম শিক্ষার্থীকে বাধ্যতামূলক কোরআন শিক্ষা ক্লাসে অংশগ্রহণ করতে হয়। এতে শিক্ষার্থীরা একদিকে জেনেরেল পড়াশোনা শিখবে অন্যদিকে শুদ্ধভাবে কোরআন শিখবে।",
+        "শিশুদের ইংরেজি এবং গনিতের ভিত্তি শক্ত করার জন্য বিশেষ গুরত্ব দেওয়া হয়",
     },
     {
-      title: "স্মার্ট স্টুডেন্ট রিপোর্ট",
+      title: "শুদ্ধভাবে কোরআন শিক্ষা",
       description:
-        "প্রতিটি শিক্ষার্থীর অভিভাবক মোবাইলের মাধ্যমে শিক্ষার্থীর উপস্থিতি, মার্ক এবং অন্যান্যদের সাথে তুলনামূলক অবস্থান দেখতে পারবে।",
+        "অভিজ্ঞ হাফেজের তত্বাবধানে প্রতিটি মুসলিম শিশুকে শুদ্ধভাবে কোরআন শিক্ষা দেওয়া হয়",
     },
     {
-      title: "নিবেদিত শিক্ষকমন্ডলী",
+      title: "মাল্টিমিডিয়া ও স্মার্ট ক্লাস",
       description:
-        "আমাদের শিক্ষকমন্ডলী অত্যন্ত নিবেদিত ও অভিজ্ঞ, যারা শিক্ষার্থীদের প্রতিটি বিষয়ে ভালোভাবে গাইড করে।",
+        "অ্যানিমেশন, ভিডিও ও স্মার্ট বোর্ডে শেখানোর ফলে শিশুরা দ্রুত বুঝতে পারে।",
     },
     {
-      title: "মূল্যবোধ ও আচরণ শিক্ষা",
+      title: "মাসিক মূল্যায়নে অগ্রগতি যাচাই",
       description:
-        "শিক্ষার্থীদের নৈতিক শিক্ষা, মূল্যবোধ ও সঠিক আচরণের প্রতি মনোযোগ দেওয়া হয়।",
+        "নিয়মিত পরীক্ষার মাধ্যমে শিশুর শেখার স্তর ও উন্নতি অভিভাবক সহজেই বুঝতে পারেন",
     },
     {
-      title: "মাসিক পরীক্ষা",
+      title: "মূল্যবোধ ও আচরণ শিক্ষায় বিশেষ গুরুত্ব",
       description:
-        "শিক্ষার্থীদের প্রতিমাসে পরীক্ষা নেওয়া হয়, যা তাদের পড়াশোনার মান যাচাই করতে সাহায্য করে।",
+        "ভদ্রতা, আদব-কায়দা, দায়িত্ববোধ ও নৈতিকতা গড়ে তোলা হয় নিয়মিত চর্চার মাধ্যমে",
     },
     {
-      title: "সেমিস্টার পরীক্ষা ও পুরস্কার",
+      title: "সুন্দর হাতের লেখা উন্নয়ন",
       description:
-        "সেমিস্টার শেষে নিয়মিত পরীক্ষা এবং শ্রেষ্ঠ শিক্ষার্থীদের জন্য পুরস্কার প্রদান করা হয়।",
+        "প্রতিদিনের বিশেষ রাইটিং প্র্যাকটিসে হাতের লেখা হয়ে ওঠে পরিষ্কার ও আকর্ষণীয়",
+    },
+    {
+      title: "দুর্বল শিক্ষার্থীর জন্য অতিরিক্ত সহায়তা",
+      description: "পিছিয়ে পড়া শিশুদের জন্য রয়েছে আলাদা কেয়ার ক্লাস",
+    },
+    {
+      title: "প্রাইভেট পড়ার প্রয়োজন নেই",
+      description: "ক্লাসেই বিষয়ভিত্তিক পরিষ্কার ব্যাখ্যা ও অনুশীলন করানো হয়",
+    },
+    {
+      title: "ব্যক্তিগত অগ্রগতি মনিটরিং",
+      description:
+        "প্রত্যেক শিশুর অগ্রগতি পর্যবেক্ষণে আলাদা দায়িত্বপ্রাপ্ত শিক্ষক রয়েছেন",
     },
   ];
 
   return (
-    <section className="relative py-20 bg-gradient-to-br from-white via-blue-50/40 to-red-50/30 overflow-hidden">
-      {/* Decorative background shapes */}
-      <div className="absolute top-0 right-0 w-72 h-72 bg-[#e74c3c]/10 blur-3xl rounded-full animate-pulse-slow"></div>
-      <div className="absolute bottom-0 left-0 w-96 h-96 bg-[#2c3e50]/10 blur-[120px] rounded-full animate-float-slow"></div>
+    <section className="relative py-24 bg-gradient-to-br from-[#fdfbfb] via-[#f3f7ff] to-[#ffeaea] overflow-hidden">
+      <div className="absolute top-0 right-0 w-80 h-80 bg-[#e84118]/10 blur-3xl rounded-full animate-pulse"></div>
+      <div className="absolute bottom-0 left-0 w-96 h-96 bg-[#192a56]/10 blur-[130px] rounded-full animate-float"></div>
 
       <div className="relative mx-auto w-11/12 max-w-7xl text-center">
-        {/* Section Title */}
         <motion.h2
           initial={{ opacity: 0, y: -20 }}
           whileInView={{ opacity: 1, y: 0 }}
-          transition={{ duration: 0.6 }}
+          transition={{ duration: 0.7 }}
           viewport={{ once: true }}
-          className="text-3xl md:text-5xl font-extrabold mb-4 text-[#2c3e50]"
+          className="text-3xl md:text-5xl font-extrabold mb-5 text-[#192a56]"
         >
-          আমাদের <span className="text-[#e74c3c]">বৈশিষ্ট্যসমূহ</span>
+          কেন <span className="text-[#e84118]">টপলাইন একাডেমিতে</span> ভর্তি
+          করবেন?
         </motion.h2>
 
-        {/* Subtitle */}
         <motion.p
           initial={{ opacity: 0 }}
           whileInView={{ opacity: 1 }}
           transition={{ duration: 0.8, delay: 0.2 }}
           viewport={{ once: true }}
-          className="text-gray-600 max-w-2xl mx-auto mb-12 text-lg"
+          className="text-gray-600 max-w-2xl mx-auto mb-14 text-lg"
         >
-          টপলাইন এডুতে আমরা শিক্ষার্থীদের একাডেমিক উৎকর্ষতা, নৈতিক মূল্যবোধ ও
-          স্মার্ট জীবনদক্ষতা অর্জনে সহায়তা করি।
+          আমরা শিশুদের একাডেমিক উৎকর্ষতা, নৈতিক মূল্যবোধ, চরিত্র গঠন এবং স্মার্ট
+          জীবনদক্ষতা অর্জনে সহায়তা করি।
         </motion.p>
 
-        {/* Feature Cards */}
         <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-8">
           {features.map((feature, idx) => (
             <FeatureCard

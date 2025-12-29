@@ -1,6 +1,6 @@
-import logo from "/topline.jpeg";
+import React from "react";
 
-export default function Footer() {
+export default function SingleFooter() {
   return (
     <div className="bg-blue-950">
       <p className="text-white text-center py-2">

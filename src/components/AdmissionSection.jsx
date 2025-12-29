@@ -14,18 +14,18 @@ export default function AdmissionSection() {
       }}
     >
       {/* Gradient Overlay */}
-      <div className="absolute inset-0 bg-gradient-to-br from-white via-blue-50/70 to-red-50/50 backdrop-blur-sm"></div>
+      <div className="absolute inset-0 bg-linear-to-br from-white via-blue-50/70 to-red-50/50 backdrop-blur-sm"></div>
 
       {/* Decorative Blurs */}
       <div className="absolute top-0 left-0 w-80 h-80 bg-[#e74c3c]/20 blur-[120px] rounded-full"></div>
-      <div className="absolute bottom-0 right-0 w-[32rem] h-[32rem] bg-[#2c3e50]/10 blur-[140px] rounded-full"></div>
+      <div className="absolute bottom-0 right-0 w-lg h-128 bg-[#2c3e50]/10 blur-[140px] rounded-full"></div>
 
       <div className="relative max-w-7xl mx-auto px-6 flex flex-col lg:flex-row gap-12 items-stretch">
         {/* Left: Admission Info */}
         <motion.div
-          initial={{ opacity: 0, x: -80 }}
-          whileInView={{ opacity: 1, x: 0 }}
-          transition={{ duration: 0.9, ease: "easeOut" }}
+          initial={{ opacity: 0, scale: 0.8 }}
+          whileInView={{ opacity: 1, scale: 1 }}
+          transition={{ duration: 0.8, ease: "easeOut" }}
           viewport={{ once: true }}
           className="flex-1 bg-white/90 backdrop-blur-lg p-10 rounded-3xl shadow-2xl border border-gray-100 relative overflow-hidden"
         >
@@ -56,24 +56,24 @@ export default function AdmissionSection() {
           </ul>
 
           {/* Student Kit Section */}
-          <div className="mt-10 bg-gradient-to-r from-green-50 via-green-100/80 to-green-50 border-l-4 border-green-500 rounded-2xl shadow-inner p-6 relative overflow-hidden">
+          <div className="mt-10 bg-linear-to-r from-green-50 via-green-100/80 to-green-50 border-l-4 border-green-500 rounded-2xl shadow-inner p-6 relative overflow-hidden">
             <div className="absolute right-0 top-0 w-40 h-40 bg-green-200/40 blur-3xl rounded-full"></div>
             <h3 className="font-semibold text-xl text-green-800 mb-3">
-              ভর্তি হওয়ার পর প্রতিটি শিক্ষার্থীকে দেওয়া হবে —
+              ভর্তি হওয়ার পর প্রতিটি শিক্ষার্থীকে -
             </h3>
             <ul className="list-disc list-inside text-gray-700 space-y-2 text-base">
               <li>স্কুল ডায়েরি প্রদান করা হবে।</li>
+              <li> শিক্ষ‌ার্থীদের আইডি কার্ড দেওয়া হয় </li>
               <li>ক্লাস শিডিউল ও রুটিন প্রদান করা হবে।</li>
-              <li>অভিভাবকদের জন্য নির্দেশনা সংবলিত নোট থাকবে।</li>
             </ul>
           </div>
         </motion.div>
 
         {/* Right: Uniform Section */}
         <motion.div
-          initial={{ opacity: 0, x: 80 }}
-          whileInView={{ opacity: 1, x: 0 }}
-          transition={{ duration: 0.9, ease: "easeOut" }}
+          initial={{ opacity: 0, scale: 0.8 }}
+          whileInView={{ opacity: 1, scale: 1 }}
+          transition={{ duration: 0.8, ease: "easeOut", delay: 0.2 }}
           viewport={{ once: true }}
           className="flex-1 bg-white/90 backdrop-blur-lg p-10 rounded-3xl shadow-2xl border border-gray-100 relative overflow-hidden"
         >
@@ -97,7 +97,7 @@ export default function AdmissionSection() {
               <img
                 src={uniformBoy}
                 alt="Boy Uniform"
-                className="w-40 mx-auto rounded-xl mb-3"
+                className="w-60 mx-auto rounded-xl mb-3"
               />
               <p className="text-gray-700 font-semibold">ছেলের ড্রেস</p>
             </motion.div>
@@ -110,7 +110,7 @@ export default function AdmissionSection() {
               <img
                 src={uniformGirl}
                 alt="Girl Uniform"
-                className="w-40 mx-auto rounded-xl mb-3"
+                className="w-60 mx-auto rounded-xl mb-3"
               />
               <p className="text-gray-700 font-semibold">মেয়ের ড্রেস</p>
             </motion.div>
