@@ -34,6 +34,11 @@ import Guideline from "./pages/portal/Guideline.jsx";
 import Routine from "./pages/portal/Routine.jsx";
 import EditStudent from "./pages/portal/EditStudent.jsx";
 import EditProfile from "./dashboard/EditProfile.jsx";
+import AddFee from "./dashboard/AddFee.jsx";
+import ClassRoutine from "./pages/portal/ClassRoutine.jsx";
+import MaktabReports from "./dashboard/MaktabReports.jsx";
+import MaktabReport from "./pages/portal/MaktabReport.jsx";
+import Statistics from "./dashboard/Statistics.jsx";
 
 createRoot(document.getElementById("root")).render(
   <StrictMode>
@@ -59,7 +64,9 @@ createRoot(document.getElementById("root")).render(
           <Route path="edit-student" element={<EditStudent />} />
           <Route path="results" element={<Results />} />
           <Route path="guideline" element={<Guideline />} />
-          <Route path="routine" element={<Routine />} />
+          <Route path="exam-routine" element={<Routine />} />
+          <Route path="routine" element={<ClassRoutine />} />
+          <Route path="maktab-report" element={<MaktabReport />} />
         </Route>
 
         {/* Teacher/Admin Dashboard */}
@@ -72,12 +79,24 @@ createRoot(document.getElementById("root")).render(
           }
         >
           <Route index element={<DashboardHome />} />
+          <Route path="maktab-reports" element={<MaktabReports />} />
           <Route path="attendance" element={<AddAttendance />} />
+          <Route path="addfee" element={<AddFee />} />
           <Route path="exams" element={<ExamResultsInput />} />
           <Route path="students" element={<Students />} />
           <Route path="edit-profile" element={<EditProfile />} />
           <Route path="admission" element={<AdmissionForm />} />
-          <Route path="student-profile/:id" element={<StudentProfile />} />
+          <Route path="statistics" element={<Statistics />} />
+
+          {/* Student Profile route (Step-2) */}
+          <Route
+            path="student-profile/:id"
+            element={
+              <ProtectedRoute>
+                <StudentProfile />
+              </ProtectedRoute>
+            }
+          />
 
           {/* Admin only */}
           <Route
@@ -107,7 +126,6 @@ createRoot(document.getElementById("root")).render(
         </Route>
 
         {/* Fallback */}
-        <Route path="*" element={<Home />} />
       </Routes>
     </BrowserRouter>
   </StrictMode>

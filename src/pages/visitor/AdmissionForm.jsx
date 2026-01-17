@@ -19,12 +19,14 @@ export default function AdmissionForm() {
     gender: "",
     grade: "",
     mobile: "",
+    monthlyFee: "",
   });
 
   const [modalData, setModalData] = useState({
     studentId: "",
     firebaseId: "",
     passcode: "",
+    monthlyFee: "",
   });
 
   const [isModalOpen, setIsModalOpen] = useState(false);
@@ -37,16 +39,16 @@ export default function AdmissionForm() {
     e.preventDefault();
 
     try {
-      const yearPrefix = "26"; // 2026
+      const yearPrefix = "26"; // for 2026
       const usersRef = collection(db, "users");
 
       // Get last studentId
       const q = query(usersRef, orderBy("studentId", "desc"), limit(1));
-      const lastStudentSnapshot = await getDocs(q);
+      const lastSnapshot = await getDocs(q);
 
       let nextId = "001";
-      if (!lastStudentSnapshot.empty) {
-        const lastId = lastStudentSnapshot.docs[0].data().studentId;
+      if (!lastSnapshot.empty) {
+        const lastId = lastSnapshot.docs[0].data().studentId;
         const numeric = parseInt(lastId.slice(2)) + 1;
         nextId = numeric.toString().padStart(3, "0");
       }
@@ -63,21 +65,18 @@ export default function AdmissionForm() {
 
         const response = await fetch(
           `https://api.imgbb.com/1/upload?key=93ea398f0480de97e39ea40e2cce5b2e`,
-          {
-            method: "POST",
-            body: formDataImg,
-          }
+          { method: "POST", body: formDataImg }
         );
 
         const data = await response.json();
         if (data.success) imageUrl = data.data.url;
       }
 
-      // Get today's date as admission date
+      // Admission date
       const today = new Date();
       const admissionDate = today.toISOString().split("T")[0]; // yyyy-mm-dd
 
-      // Add document to Firestore
+      // Add document
       const docRef = await addDoc(usersRef, {
         ...formData,
         role: "student",
@@ -85,13 +84,16 @@ export default function AdmissionForm() {
         passcode,
         active: false,
         imageUrl,
-        admissionDate, // added automatically
+        admissionDate,
       });
 
-      const firebaseId = docRef.id;
-
-      // Set modal data and open modal
-      setModalData({ studentId, firebaseId, passcode });
+      // Open modal with info
+      setModalData({
+        studentId,
+        firebaseId: docRef.id,
+        passcode,
+        monthlyFee: formData.monthlyFee || "অনির্ধারিত",
+      });
       setIsModalOpen(true);
 
       // Reset form
@@ -104,6 +106,7 @@ export default function AdmissionForm() {
         gender: "",
         grade: "",
         mobile: "",
+        monthlyFee: "",
       });
       fileInput.value = "";
     } catch (error) {
@@ -198,10 +201,10 @@ export default function AdmissionForm() {
             required
           >
             <option value="">বাছাই করুন</option>
-            <option>প্লে</option>
+            <option>প্লে-এ</option>
+            <option>প্লে-বি</option>
             <option>নার্সারি</option>
             <option>ওয়ান</option>
-            <option>টু</option>
           </select>
 
           <label className="label">মোবাইল নম্বর</label>
@@ -213,6 +216,17 @@ export default function AdmissionForm() {
             className="input w-full"
             placeholder="অভিভাবকের নম্বর"
             required
+          />
+
+          {/* Monthly Fee */}
+          <label className="label">মাসিক বেতন (ঐচ্ছিক)</label>
+          <input
+            type="number"
+            name="monthlyFee"
+            value={formData.monthlyFee}
+            onChange={handleChange}
+            className="input w-full"
+            placeholder="৳"
           />
 
           <fieldset className="fieldset mt-4">
@@ -238,6 +252,10 @@ export default function AdmissionForm() {
             <p className="py-2">Passcode: {modalData.passcode}</p>
             <p className="py-2">
               Admission Date: {new Date().toLocaleDateString("bn-BD")}
+            </p>
+            <p className="py-2">
+              মাসিক বেতন:{" "}
+              {modalData.monthlyFee ? `${modalData.monthlyFee}৳` : "অনির্ধারিত"}
             </p>
             <div className="modal-action">
               <button className="btn" onClick={() => setIsModalOpen(false)}>

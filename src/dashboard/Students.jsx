@@ -13,38 +13,15 @@ import { Link } from "react-router";
 import { FaUser } from "react-icons/fa";
 
 export default function Students() {
-  const [classes, setClasses] = useState([]);
-  const [selectedClass, setSelectedClass] = useState("");
   const [students, setStudents] = useState([]);
+  const [selectedClass, setSelectedClass] = useState("");
 
   const userData = JSON.parse(localStorage.getItem("userData")) || {};
   const isAdmin = userData.role === "admin";
 
-  /* =========================
-     Fetch available classes
-  ========================== */
-  useEffect(() => {
-    const fetchClasses = async () => {
-      const snapshot = await getDocs(collection(db, "users"));
-      const classSet = new Set();
+  const classes = ["প্লে-এ", "প্লে-বি", "নার্সারি", "ওয়ান"];
 
-      snapshot.docs.forEach((doc) => {
-        const data = doc.data();
-        if (data.grade && data.role === "student") {
-          classSet.add(data.grade);
-        }
-      });
-
-      setClasses([...classSet]);
-    };
-
-    fetchClasses();
-  }, []);
-
-  /* =========================
-     Fetch students by class
-     + Sort by studentId ASC
-  ========================== */
+  // Fetch students by class
   useEffect(() => {
     if (!selectedClass) return;
 
@@ -54,34 +31,26 @@ export default function Students() {
         where("grade", "==", selectedClass),
         where("role", "==", "student")
       );
-
       const snapshot = await getDocs(q);
-
-      const sortedStudents = snapshot.docs
+      const sorted = snapshot.docs
         .map((doc) => ({ id: doc.id, ...doc.data() }))
         .sort((a, b) => Number(a.studentId) - Number(b.studentId));
-
-      setStudents(sortedStudents);
+      setStudents(sorted);
     };
 
     fetchStudents();
   }, [selectedClass]);
 
-  /* =========================
-     Toggle Active / Deactive
-  ========================== */
+  // Toggle Active / Deactive
   const toggleStatus = async (student) => {
     const docRef = doc(db, "users", student.id);
     await updateDoc(docRef, { active: !student.active });
-
     setStudents((prev) =>
       prev.map((s) => (s.id === student.id ? { ...s, active: !s.active } : s))
     );
   };
 
-  /* =========================
-     Delete Student (Admin)
-  ========================== */
+  // Delete Student
   const deleteStudent = async (id) => {
     const confirmDelete = window.confirm(
       "আপনি কি নিশ্চিতভাবে এই শিক্ষার্থীকে মুছে ফেলতে চান?"
@@ -178,6 +147,14 @@ export default function Students() {
                   <span className="font-semibold">মাতা:</span> {s.motherName}
                 </p>
 
+                {/* Monthly Fee */}
+                {isAdmin && (
+                  <p>
+                    <span className="font-semibold">মাসিক বেতন:</span>{" "}
+                    {s.monthlyFee ? `${s.monthlyFee}৳` : "অনির্ধারিত"}
+                  </p>
+                )}
+
                 {/* Admin Actions */}
                 {isAdmin && (
                   <div className="flex justify-between items-center mt-2">
@@ -202,7 +179,7 @@ export default function Students() {
                         onClick={() => deleteStudent(s.id)}
                         className="px-2 py-1 rounded-full bg-gray-800 hover:bg-black text-white text-xs font-semibold"
                       >
-                        Delete
+                        ডিলিট
                       </button>
                     </div>
                   </div>
@@ -212,14 +189,14 @@ export default function Students() {
                 <div className="flex justify-center gap-2 mt-3">
                   <a
                     href={`tel:${s.mobile}`}
-                    className="text-xs sm:text-sm font-semibold px-3 py-1 rounded-md bg-red-500 text-white hover:bg-red-600"
+                    className="btn btn-sm btn-secondary"
                   >
                     কল করুন
                   </a>
 
                   <Link
+                    className="btn btn-sm btn-primary"
                     to={`/dashboard/student-profile/${s.studentId}`}
-                    className="text-xs sm:text-sm font-semibold px-3 py-1 rounded-md bg-blue-950 text-white hover:bg-blue-800"
                     onClick={() =>
                       localStorage.setItem("studentData", JSON.stringify(s))
                     }

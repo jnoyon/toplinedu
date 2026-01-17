@@ -1,5 +1,5 @@
 import React, { useEffect, useState } from "react";
-import { FaPaperclip, FaUser, FaBell } from "react-icons/fa";
+import { FaPaperclip, FaUser, FaBell, FaMosque } from "react-icons/fa";
 import { Link } from "react-router";
 import { db } from "../../firebase/firebase.init.js";
 import { collection, getDocs } from "firebase/firestore";
@@ -19,7 +19,7 @@ export default function PortalHome() {
 
   // Fetch student data
   useEffect(() => {
-    const data = JSON.parse(localStorage.getItem("studentData")) || {};
+    const data = JSON.parse(localStorage.getItem("userData")) || {};
     setStudentData(data);
   }, []);
 
@@ -44,10 +44,27 @@ export default function PortalHome() {
     },
     {
       link: "/routine",
+      label: "ক্লাসের সময়সূচী",
+      color: "from-purple-600 to-purple-900",
+      icon: <FaPaperclip />,
+    },
+    {
+      link: "/exam-routine",
       label: "পরীক্ষার সময়সূচী",
       color: "from-purple-600 to-purple-900",
       icon: <FaPaperclip />,
     },
+    // Only show Maktab report if student is Muslim
+    ...(studentData.religion === "ইসলাম"
+      ? [
+          {
+            link: "/maktab-report",
+            label: "মক্তব রিপোর্ট",
+            color: "from-green-600 to-purple-900",
+            icon: <FaMosque />,
+          },
+        ]
+      : []),
   ];
 
   return (

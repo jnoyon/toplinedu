@@ -15,13 +15,12 @@ export default function Routine() {
 
         {/* Title */}
         <h1 className="text-2xl sm:text-3xl font-extrabold text-gray-800 mb-4">
-          ক্লাস রুটিন & পরীক্ষার শিডিউল
+          পরীক্ষার শিডিউল
         </h1>
 
         {/* Message */}
         <p className="text-gray-600 text-base sm:text-lg mb-6">
-          আমাদের শিক্ষার্থীদের জন্য ক্লাস রুটিন এবং পরীক্ষার সময়সূচী খুব শীঘ্রই
-          প্রকাশ করা হবে।
+          আমাদের শিক্ষার্থীদের জন্য পরীক্ষার সময়সূচী খুব শীঘ্রই প্রকাশ করা হবে।
         </p>
 
         {/* Clock Icon for visual flair */}

@@ -59,7 +59,7 @@ const getAttendanceStatus = (attendance, selectedMonth) => {
 };
 
 export default function Profile() {
-  const studentData = JSON.parse(localStorage.getItem("studentData")) || {};
+  const studentData = JSON.parse(localStorage.getItem("userData")) || {};
   const [attendance, setAttendance] = useState([]);
   const [monthlyResults, setMonthlyResults] = useState([]);
   const [semesterResults, setSemesterResults] = useState([]);
@@ -162,7 +162,7 @@ export default function Profile() {
           )}
 
           {/* Name & Grade */}
-          <h2 className="text-4xl md:text-5xl font-extrabold text-[#1f2937] mb-2 drop-shadow-sm">
+          <h2 className="text-2xl md:text-5xl font-extrabold text-[#1f2937] mb-2 drop-shadow-sm">
             {studentData.name}
           </h2>
           <p className="text-gray-500 text-lg md:text-xl mb-6">

@@ -6,7 +6,6 @@ import { db } from "../../firebase/firebase.init";
 
 import Hero from "../../components/Hero";
 import Features from "../../components/Features";
-import AdmissionSection from "../../components/AdmissionSection";
 import PortalHome from "../portal/PortalHome";
 import DashboardHome from "../../layouts/DashboardHome";
 
@@ -16,7 +15,7 @@ export default function Home() {
   const auth = getAuth();
 
   useEffect(() => {
-    const studentData = JSON.parse(localStorage.getItem("studentData"));
+    const studentData = JSON.parse(localStorage.getItem("userData"));
 
     // If student is logged in
     if (studentData?.role === "student") {
@@ -25,15 +24,16 @@ export default function Home() {
       return;
     }
 
+    const adminEmails = ["jihadur51@gmail.com", "jillurrahmandiu@gmail.com"];
+
     // Firebase Auth listener for teachers/admin
     const unsubscribe = onAuthStateChanged(auth, async (user) => {
       if (user) {
-        // Admin check
-        if (user.email === "jihadur51@gmail.com") {
+        if (adminEmails.includes(user.email)) {
           setUserRole("admin");
         } else {
-          // Teacher check
-          const ref = doc(db, "teachers", user.uid);
+          // Teacher check from 'users' collection
+          const ref = doc(db, "users", user.uid);
           const snap = await getDoc(ref);
 
           if (snap.exists() && snap.data().role === "teacher") {
@@ -52,9 +52,13 @@ export default function Home() {
     return () => unsubscribe();
   }, []);
 
-  if (loading) return <p className="text-center mt-10">Loading...</p>;
+  if (loading)
+    return (
+      <div className="flex items-center justify-center min-h-screen">
+        <div className="animate-spin rounded-full h-12 w-12 border-b-2 border-blue-500"></div>
+      </div>
+    );
 
-  // Protected renders
   if (userRole === "student") return <PortalHome />;
   if (userRole === "teacher" || userRole === "admin") return <DashboardHome />;
 
@@ -70,7 +74,6 @@ export default function Home() {
 
       <Hero />
       <Features />
-      <AdmissionSection />
     </div>
   );
 }

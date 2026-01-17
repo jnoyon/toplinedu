@@ -2,6 +2,7 @@ import { FaPhoneSquare, FaSignOutAlt, FaUserCircle } from "react-icons/fa";
 import { Link, useNavigate } from "react-router";
 import { useState, useEffect } from "react";
 import { getAuth, signOut } from "firebase/auth";
+import Swal from "sweetalert2";
 import logo from "/topline.jpeg";
 
 export default function Header() {
@@ -16,13 +17,24 @@ export default function Header() {
   }, []);
 
   const handleLogout = () => {
-    const auth = getAuth();
-    signOut(auth).catch((err) => console.error("SignOut Error:", err));
-    localStorage.removeItem("studentData");
-    localStorage.removeItem("userData");
-
-    setUser(null);
-    navigate("/login");
+    Swal.fire({
+      title: "আপনি কি সত্যিই লগআউট করতে চান?",
+      icon: "warning",
+      showCancelButton: true,
+      confirmButtonColor: "#3085d6",
+      cancelButtonColor: "#d33",
+      confirmButtonText: "হ্যাঁ, লগআউট করুন",
+      cancelButtonText: "বাতিল",
+    }).then((result) => {
+      if (result.isConfirmed) {
+        const auth = getAuth();
+        signOut(auth).catch((err) => console.error("SignOut Error:", err));
+        localStorage.removeItem("studentData");
+        localStorage.removeItem("userData");
+        setUser(null);
+        navigate("/login");
+      }
+    });
   };
 
   const isStudent = user?.role === "student";
@@ -79,14 +91,6 @@ export default function Header() {
             <div className="flex items-center gap-4">
               {/* DESKTOP MENU */}
               <ul className="hidden lg:flex items-center gap-6 font-semibold text-[#2c3e50]">
-                <li>
-                  <Link to="/about">আমাদের সম্পর্কে</Link>
-                </li>
-
-                <li>
-                  <a href="https://next.toplineedu.com">এইচএসসি প্রোগ্রাম</a>
-                </li>
-
                 {isStudent && (
                   <li>
                     <Link to="/portal">পোর্টাল</Link>
@@ -186,13 +190,6 @@ export default function Header() {
               src={logo}
               className="rounded-full w-32 mx-auto mb-4 shadow-md"
             />
-          </li>
-
-          <li>
-            <Link to="/about">আমাদের সম্পর্কে</Link>
-          </li>
-          <li>
-            <a href="https://next.toplineedu.com">এইচএসসি প্রোগ্রাম</a>
           </li>
 
           {isStudent && (

@@ -22,7 +22,8 @@ export default function Login() {
   const navigate = useNavigate();
   const auth = getAuth();
 
-  const adminEmails = ["jihadur51@gmail.com"];
+  // Admin emails
+  const adminEmails = ["jihadur51@gmail.com", "jillurrahmandiu@gmail.com"];
 
   // ---------------------------------------------------------
   // 🔹 Handle Login Submit
